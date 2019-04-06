@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
-const db = require('./db/config.js');
+// const db = require('./db/config.js');
+const { getCurrentProduct } = require('./db/db_helpers.js');
 // const env = require('dotenv').config(); <<<< NEED TO IMPLEMENT THIS
 
 const port = process.env.PORT || 3003;
@@ -9,14 +10,34 @@ const app = express();
 
 app.use(express.static(path.join(__dirname, '../dist')));
 
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
 app.get('/product_info', (req, res) => {
-  db.query(`SELECT * FROM products WHERE sku = ${Math.floor(Math.random() * 50)}`, (err, response) => {
+  let sku = req.query.sku;
+  getCurrentProduct(sku, (err, response) => {
     if (err) {
-      console.log('err in server getting from db:', err);
+      console.log('error getting current product in server:', err);
       res.end();
-    } else{
-      console.log('response in server from db:', response);
-      res.send(response.rows[0]);      
+    } else {
+      // console.log('successful get in server:', response);
+      res.send(response.rows);
+    }
+  })
+})
+
+app.get('/images', (req, res) => {
+  let title = req.query.title;
+  getRelatedImages(title, (err, response) => {
+    if (err) {
+      console.log('error getting images in server:', err);
+      res.end();
+    } else {
+      console.log('success response getting images in server:', reponse);
+      res.send(reponse.rows);
     }
   })
 })
@@ -25,3 +46,7 @@ app.get('/product_info', (req, res) => {
 app.listen(port, () => {
   console.log(`APP IS LISTENING TO SERVE YOUR NEEDS at http://localhost:${port}`)
 });
+
+
+
+
