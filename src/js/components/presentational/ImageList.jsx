@@ -8,80 +8,117 @@ const ListContainer = styled.div `
   float: left;
 `
 
-class ImageList extends React.Component {
-  constructor(props) {
-    super(props);
+// class ImageList extends React.Component {
+//   constructor(props) {
+//     super(props);
 
-    this.state = {
-      images: [],
-      currentImage: this.props.image
-    }
-  }
+//     this.state = {
+//       images: [],
+//       currentImage: this.props.image,
+//       currentTitle: 'fake title'
+//     }
+//   }
 
-  getTitleNoun() {
-    setTimeout(() => {console.log('!!!!!', this.props.title.split(' ')[1])}, 2000);
-    // return (this.props.title ? this.props.title.split(' ')[1] : null)
-    // setTimeout(() => {console.log('words:', words)}, 2000);
-    // return words[1];
-    // return setTimeout(() => this.props.title.split(' ')[1], 2000);
-    setTimeout(() => { return this.props.title.split(' ')[1]}, 2000);
-  }
+//   // componentDidMount() {
+//   //   this.setState({
+//   //     currentTitle: this.props.title
+//   //   })
+//   //   this.getTitleNoun();
+//   // }
 
-  findRelatedImages() {
-    let noun = this.getTitleNoun();
-    setTimeout(() => { console.log('noun:', noun)}, 2500);
-    // axios.get('http://localhost:3003/images', {
-    //   params: {
-    //     title: noun // contains second word in title
-    //   }
-    // })
-    // .then((response) => {
-    //   console.log('image response on client side:', response);
-    //   // this.setState({
-    //   //   images: response.data[0]
-    //   // })
-    // })
-    // .catch((err) => {
-    //   console.log('err getting images on client side:', err)
-    // })
-  }
+//   // componentDidUpdate(prevProps) {
+//     // console.log('prevPRops:', prevProps);
+//   //   if (this.state.currentTitle !== this.props.title) {
+//   //     axios.get('http://localhost:3003/images', {
+//   //         params: {
+//   //           title: prevProps.title // contains second word in title
+//   //         }
+//   //       })
+//   //       .then((response) => {
+//   //         console.log('image response on client side:', response);
+//   //         // this.setState({
+//   //         //   images: response.data[0]
+//   //         // })
+//   //       })
+//   //       .catch((err) => {
+//   //         console.log('err getting images on client side:', err)
+//   //       })
+//   //   }
+//   // }
 
-  switchImage(newImage) {
-    this.setState({
-      currentImage: newImage
-    })
-  }
+//   // getTitleNoun() {
+//   //   let noun = this.props.title || this.state.currentTitle;
+//   //   let split = noun.split(' ')[1]
+//   //   console.log('noun:', noun);
+//   //   console.log('split:', split);
 
-  componentDidMount() {
-    this.findRelatedImages();
-  }
+//   //   // console.log('NOUN:', noun);
+//   //   // setTimeout(() => {console.log('!!!!!', this.props.title.split(' ')[1])}, 2000);
+//   //   // setTimeout(() => {console.log('TITLE', this.props.title)}, 2000);
+//   //   // // return (this.props.title ? this.props.title.split(' ')[1] : null)
+//   //   // // setTimeout(() => {console.log('words:', words)}, 2000);
+//   //   // // return words[1];
+//   //   // // return setTimeout(() => this.props.title.split(' ')[1], 2000);
+//   //   // setTimeout(() => { return this.props.title.split(' ')[1]}, 2000);
+//   // }
 
-  render() {
-    return (
-      <ListContainer>
-        <div>
-          <img src={this.props.image} style={{height: 50 + 'px'}}></img><br></br>
-          <img src={this.props.image} style={{height: 50 + 'px'}}></img>
-        </div>
-      </ListContainer>
-    )
-  }
-}
+//   // findRelatedImages() {
+//   //   let noun = this.getTitleNoun();
+//   //   setTimeout(() => { console.log('noun:', noun)}, 2500);
+//   //   // axios.get('http://localhost:3003/images', {
+//   //   //   params: {
+//   //   //     title: noun // contains second word in title
+//   //   //   }
+//   //   // })
+//   //   // .then((response) => {
+//   //   //   console.log('image response on client side:', response);
+//   //   //   // this.setState({
+//   //   //   //   images: response.data[0]
+//   //   //   // })
+//   //   // })
+//   //   // .catch((err) => {
+//   //   //   console.log('err getting images on client side:', err)
+//   //   // })
+//   // }
 
-export default ImageList;
+//   switchImage(newImage) {
+//     this.setState({
+//       currentImage: newImage
+//     })
+//   }
 
-// const ImageList = (props) => {
-//   return ( 
-//   <ListContainer>
-//     <div>
-//       <img src={props.image} style={{height: 50 + 'px'}}></img><br></br>
-//       <img src={props.image} style={{height: 50 + 'px'}}></img>
-//     </div>
-//   </ListContainer>
-//   )
-// };
+
+//   render() {
+//     return (
+//       <ListContainer>
+//         <div>
+//           <img src={this.props.image} style={{height: 50 + 'px', padding: 5 + 'px'}}></img><br></br>
+//           <img src={this.props.image} style={{height: 50 + 'px', padding: 5 + 'px'}}></img>
+//         </div>
+//       </ListContainer>
+//     )
+//   }
+// }
 
 // export default ImageList;
+
+const ImageList = (props) => {
+  return ( 
+  <ListContainer>
+    <div>
+      {props.images.map((image) => {
+        return (
+          <div>
+            <img src={image.photo_url} style={{height: 50 + 'px', padding: 5 + 'px'}}></img><br></br>
+          </div>
+        )
+      })}
+    </div>
+  </ListContainer>
+  )
+};
+
+export default ImageList;
 
 
 

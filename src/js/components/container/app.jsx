@@ -4,6 +4,8 @@ import Description from "../presentational/Description.jsx";
 import axios from "axios";
 import styled from 'styled-components';
 
+//////// STYLED COMPONENTS /////////
+
 const Title = styled.h1 `
   font-size: 10px; 
 `
@@ -12,18 +14,20 @@ const Container = styled.div `
   width: 66%;
   border: 1px solid lightgray;
 `
-const Image = styled.img `
-  background: black;
-`
 
-
+//////// COMPONENT /////////
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentProduct: {}
+      currentProduct: {title: ''},
+      images: []
     };
+  }
+
+  componentDidMount() {
+    this.updateCurrentProduct();
   }
 
   updateCurrentProduct() {
@@ -33,19 +37,35 @@ class App extends React.Component {
       }
     })
     .then((response) => {
-      console.log('response on client side:', response);
       this.setState({
         currentProduct: response.data[0]
       })
+      let noun = this.state.currentProduct.title.split(' ')[1];
+      return noun;
+    })
+    .then((queryParam) => {
+      axios.get('http://localhost:3003/images', {
+          params: {
+            title: queryParam 
+          }
+        })
+        .then((response) => {
+          console.log('IMAGE response on client side:', response);
+          this.setState({
+            images: response.data
+          })
+          console.log('images in state:', this.state.images)
+        })
+        .catch((err) => {
+          console.log('err getting images on client side:', err)
+        })
     })
     .catch((err) => {
       console.log('err getting currentProduct on client side:', err)
     })
   }
 
-  componentDidMount() {
-    this.updateCurrentProduct();
-  }
+  
 
   
   render() {
@@ -53,16 +73,16 @@ class App extends React.Component {
     if (!window.State) {
       window.State = this.state.currentProduct.sku
     }
+    let currTitle = this.state.currentProduct.title;
     return (
       <Container>
       <div id="main">
-        {/* NEED TO MAKE TM SMALLER and do data[state.currentProduct*/}
-        {/* <h1>{this.state.currentProduct.title}™</h1> */}
         <Title> <h1>{this.state.currentProduct.title}</h1></Title> 
-        {/* WILL INCLUDE IMAGE LIST ONCE STYLED TO BE APPROPRIATELY SIZED */}
+
         {/* add functionality to change image on click/hover */}
-        <ImageList image={this.state.currentProduct.photo_url} title={this.state.currentProduct.title}/>
-        <img src={this.state.currentProduct.photo_url} style={{height: 300 + 'px'}}></img> 
+        
+        <ImageList image={this.state.currentProduct.photo_url} images={this.state.images}/>
+        <img src={this.state.currentProduct.photo_url} style={{height: 300 + 'px', padding: 5 + 'px'}}></img> 
         <h2>About this item</h2>
         {/* <h4>{this.state.currentProduct.price}</h4> */}
         <h3>Highlights</h3>

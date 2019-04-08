@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 // const db = require('./db/config.js');
-const { getCurrentProduct } = require('./db/db_helpers.js');
+const { getCurrentProduct, getRelatedImages } = require('./db/db_helpers.js');
 // const env = require('dotenv').config(); <<<< NEED TO IMPLEMENT THIS
 
 const port = process.env.PORT || 3003;
@@ -31,13 +31,14 @@ app.get('/product_info', (req, res) => {
 
 app.get('/images', (req, res) => {
   let title = req.query.title;
+  console.log('title in server:', req.query.title);
   getRelatedImages(title, (err, response) => {
     if (err) {
       console.log('error getting images in server:', err);
       res.end();
     } else {
-      console.log('success response getting images in server:', reponse);
-      res.send(reponse.rows);
+      console.log('success response getting images in server:', response);
+      res.send(response.rows);
     }
   })
 })
