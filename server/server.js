@@ -16,7 +16,7 @@ app.use(cors());
 //   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 //   next();
 // });
-
+console.log('path.join:', path.join(__dirname, '../dist'));
 app.use(express.static(path.join(__dirname, '../dist')));
 // app.use(express.static('dist'));
 
