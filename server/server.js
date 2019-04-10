@@ -5,20 +5,20 @@ const cors = require('cors')
 const { getCurrentProduct, getRelatedImages } = require('./db/db_helpers.js');
 // const env = require('dotenv').config(); <<<< NEED TO IMPLEMENT THIS
 
-const port = process.env.PORT || 3003;
+const port = process.env.PORT || 3000;
 
 const app = express();
 
-// app.use(cors());
+app.use(cors());
 
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
+// app.use((req, res, next) => {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//   next();
+// });
 
 // app.use(express.static(path.join(__dirname, '../dist')));
-app.use(express.static('./dist'));
+app.use(express.static('dist'));
 
 
 app.get('/product_info', (req, res) => {
