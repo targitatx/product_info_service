@@ -22,6 +22,7 @@ app.use(express.static('./dist'));
 
 
 app.get('/product_info', (req, res) => {
+  console.log('HHEYYYY')
   let sku = req.query.sku;
   getCurrentProduct(sku, (err, response) => {
     if (err) {
