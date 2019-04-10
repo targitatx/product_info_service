@@ -17,8 +17,8 @@ app.use(cors());
 //   next();
 // });
 
-app.use(express.static(path.join(__dirname, '../dist')));
-
+// app.use(express.static(path.join(__dirname, '../dist')));
+app.use(express.static('./dist'));
 
 
 app.get('/product_info', (req, res) => {
