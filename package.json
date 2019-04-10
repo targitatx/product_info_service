@@ -4,6 +4,7 @@
   "description": "",
   "author": "",
   "license": "",
+  "main": "index.js",
   "engines": {
     "node": ">=6.13.0"
   },
