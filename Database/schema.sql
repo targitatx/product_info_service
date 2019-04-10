@@ -2,7 +2,7 @@ DROP DATABASE IF EXISTS product_info;
 
 CREATE DATABASE product_info;
 
-\c product_info;
+-- \c product_info;
 
 CREATE TABLE products (
   sku SERIAL,
