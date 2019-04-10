@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const cors = require('cors')
 // const db = require('./db/config.js');
 const { getCurrentProduct, getRelatedImages } = require('./db/db_helpers.js');
 // const env = require('dotenv').config(); <<<< NEED TO IMPLEMENT THIS
@@ -8,11 +9,13 @@ const port = process.env.PORT || 3003;
 
 const app = express();
 
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
+app.use(cors());
+
+// app.use((req, res, next) => {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//   next();
+// });
 
 app.use(express.static(path.join(__dirname, '../dist')));
 
