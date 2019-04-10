@@ -22,12 +22,16 @@ class App extends React.Component {
     super(props);
     this.state = {
       currentProduct: {title: ''},
-      images: []
+      images: [],
+      currentImage: {}
     };
   }
 
   componentDidMount() {
     this.updateCurrentProduct();
+    this.setState ({
+      currentImage: this.state.currentProduct.photo_url
+    })
   }
 
   updateCurrentProduct() {
@@ -37,10 +41,10 @@ class App extends React.Component {
       }
     })
     .then((response) => {
-      this.setState({
+      this.setState ({
         currentProduct: response.data[0]
       })
-      let noun = this.state.currentProduct.title.split(' ')[1];
+      const noun = this.state.currentProduct.title.split(' ')[1];
       return noun;
     })
     .then((queryParam) => {
@@ -50,11 +54,9 @@ class App extends React.Component {
           }
         })
         .then((response) => {
-          console.log('IMAGE response on client side:', response);
           this.setState({
             images: response.data
           })
-          console.log('images in state:', this.state.images)
         })
         .catch((err) => {
           console.log('err getting images on client side:', err)
@@ -63,9 +65,16 @@ class App extends React.Component {
     .catch((err) => {
       console.log('err getting currentProduct on client side:', err)
     })
-  }
+  } 
 
-  
+  // need to prevent default and fix click handler (setState of currentImage?)
+  handleClick(e) {
+    console.log('EEEE.target', e.target);
+    e.preventDefault();
+    this.setState ({
+      currentImage: e.target
+    })
+  }
 
   
   render() {
@@ -73,7 +82,7 @@ class App extends React.Component {
     if (!window.State) {
       window.State = this.state.currentProduct.sku
     }
-    let currTitle = this.state.currentProduct.title;
+
     return (
       <Container>
       <div id="main">
@@ -81,7 +90,7 @@ class App extends React.Component {
 
         {/* add functionality to change image on click/hover */}
         
-        <ImageList image={this.state.currentProduct.photo_url} images={this.state.images}/>
+        <ImageList image={this.state.currentProduct.photo_url} images={this.state.images} onClick={this.handleClick.bind(this)}/>
         <img src={this.state.currentProduct.photo_url} style={{height: 300 + 'px', padding: 5 + 'px'}}></img> 
         <h2>About this item</h2>
         {/* <h4>{this.state.currentProduct.price}</h4> */}

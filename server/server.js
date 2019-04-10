@@ -23,7 +23,6 @@ app.get('/product_info', (req, res) => {
       console.log('error getting current product in server:', err);
       res.end();
     } else {
-      // console.log('successful get in server:', response);
       res.send(response.rows);
     }
   })
@@ -31,13 +30,11 @@ app.get('/product_info', (req, res) => {
 
 app.get('/images', (req, res) => {
   let title = req.query.title;
-  console.log('title in server:', req.query.title);
   getRelatedImages(title, (err, response) => {
     if (err) {
       console.log('error getting images in server:', err);
       res.end();
     } else {
-      console.log('success response getting images in server:', response);
       res.send(response.rows);
     }
   })
