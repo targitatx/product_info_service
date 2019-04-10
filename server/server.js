@@ -5,7 +5,7 @@ const cors = require('cors')
 const { getCurrentProduct, getRelatedImages } = require('./db/db_helpers.js');
 // const env = require('dotenv').config(); <<<< NEED TO IMPLEMENT THIS
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3003;
 
 const app = express();
 
