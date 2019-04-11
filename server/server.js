@@ -16,13 +16,11 @@ app.use(cors());
 //   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 //   next();
 // });
-// console.log('path.join:', path.join(__dirname, '../dist'));
 app.use(express.static(path.join(__dirname, '../dist')));
 // app.use(express.static('dist'));
 
 
 app.get('/product_info', (req, res) => {
-  console.log('HHEYYYY')
   let sku = req.query.sku;
   getCurrentProduct(sku, (err, response) => {
     if (err) {
