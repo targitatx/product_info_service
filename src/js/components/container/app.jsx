@@ -8,6 +8,7 @@ import styled from 'styled-components';
 
 const Title = styled.h1 `
   font-size: 10px; 
+  font-weight: 300;
 `
 const Container = styled.div `
   text-align: left;
