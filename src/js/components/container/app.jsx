@@ -87,7 +87,6 @@ class App extends React.Component {
     return (
       <Container>
       <div id="main">
-        <h1>HELLLOOOO!!!</h1>
         <Title> <h1>{this.state.currentProduct.title}</h1> </Title> 
 
         {/* add functionality to change image on click/hover */}
