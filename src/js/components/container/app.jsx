@@ -93,7 +93,7 @@ class App extends React.Component {
         {/* add functionality to change image on click/hover */}
         
         <ImageList image={this.state.currentProduct.photo_url} images={this.state.images} onClick={this.handleClick.bind(this)}/>
-        <img src={this.state.currentImage} style={{height: 300 + 'px', padding: 5 + 'px'}}></img> 
+        <img src={this.state.currentProduct.photo_url} style={{height: 300 + 'px', padding: 5 + 'px'}}></img> 
         <h2>About this item</h2>
         {/* <h4>{this.state.currentProduct.price}</h4> */}
         <h3>Highlights</h3>
