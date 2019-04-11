@@ -24,7 +24,7 @@ class App extends React.Component {
     this.state = {
       currentProduct: {title: ''},
       images: [],
-      currentImage: {}
+      currentImage: <img></img>
     };
   }
 
@@ -70,7 +70,6 @@ class App extends React.Component {
 
   // need to prevent default and fix click handler (setState of currentImage?)
   handleClick(e) {
-    console.log('hiiiii');
     console.log('EEEE.target', e.target);
     e.preventDefault();
     this.setState ({
