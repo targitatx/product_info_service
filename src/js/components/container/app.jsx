@@ -69,6 +69,7 @@ class App extends React.Component {
 
   // need to prevent default and fix click handler (setState of currentImage?)
   handleClick(e) {
+    console.log('hiiiii');
     console.log('EEEE.target', e.target);
     e.preventDefault();
     this.setState ({
@@ -86,12 +87,12 @@ class App extends React.Component {
     return (
       <Container>
       <div id="main">
-        <Title> <h1>{this.state.currentProduct.title}</h1></Title> 
+        <Title> <h1>{this.state.currentProduct.title}</h1> </Title> 
 
         {/* add functionality to change image on click/hover */}
         
         <ImageList image={this.state.currentProduct.photo_url} images={this.state.images} onClick={this.handleClick.bind(this)}/>
-        <img src={this.state.currentProduct.photo_url} style={{height: 300 + 'px', padding: 5 + 'px'}}></img> 
+        <img src={this.state.currentImage} style={{height: 300 + 'px', padding: 5 + 'px'}}></img> 
         <h2>About this item</h2>
         {/* <h4>{this.state.currentProduct.price}</h4> */}
         <h3>Highlights</h3>
