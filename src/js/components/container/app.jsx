@@ -6,10 +6,19 @@ import styled from 'styled-components';
 
 //////// STYLED COMPONENTS /////////
 
+const Departments = styled.span `
+`
+
 const Title = styled.h1 `
   font-size: 10px; 
   font-weight: 300;
+  font-family: Helvetica Neue;
 `
+const Price = styled.h4 `
+  text-align: left;
+  color: red;
+`
+
 const Container = styled.div `
   text-align: left;
   width: 66%;
@@ -29,17 +38,13 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    this.updateCurrentProduct();
-    // this.setState ({
-    //   currentImage: this.state.currentProduct.photo_url
-    // })
+    window.addEventListener('changeItem', (event)=>{this.updateCurrentProduct(event.detail)})
   }
 
-  updateCurrentProduct() {
+  updateCurrentProduct(sku) {
     axios.get('http://ec2-3-16-128-154.us-east-2.compute.amazonaws.com:3003/product_info', {
       params: {
-        sku: window.State || Math.floor(Math.random() * 100) + 1
-      }
+        sku: sku || Math.floor(Math.random() * 100) + 1      }
     })
     .then((response) => {
       this.setState ({
@@ -84,21 +89,22 @@ class App extends React.Component {
 
   
   render() {
-    window.Info = this
-    if (!window.State) {
-      window.State = this.state.currentProduct.sku
-    }
+    // window.Info = this
+    // if (!window.State) {
+    //   window.State = this.state.currentProduct.sku
+    // }
 
     return (
       <Container>
       <div id="main">
+        <Departments> <span> <u>All</u>/ </span> <span> <u>Products</u>/ </span> <span> <u>Stuff</u> </span> </Departments>
         <Title> <h1>{this.state.currentProduct.title}</h1> </Title>
         {/* add functionality to change image on click/hover */}
         
         <ImageList image={this.state.currentProduct.photo_url} images={this.state.images} onClick={this.handleClick.bind(this)}/>
         <img src={this.state.currentImage} style={{height: 300 + 'px', padding: 5 + 'px'}}></img> 
-        <h2>About this item</h2>
-        {/* <h4>{this.state.currentProduct.price}</h4> */}
+        <h2 style={{textAlign: 'center'}}>About this item</h2>
+        <h4>{this.state.currentProduct.price}</h4>
         <h3>Highlights</h3>
         <Description text={this.state.currentProduct.product_description} />
         {/* <p>{this.state.currentProduct.product_description}</p> */}
