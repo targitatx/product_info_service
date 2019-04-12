@@ -41,7 +41,7 @@ class App extends React.Component {
     window.addEventListener('changeItem', (event)=>{this.updateCurrentProduct(event.detail)})
   }
 
-  updateCurrentProduct(sku) {
+  updateCurrentProduct(sku=1) {
     axios.get('http://ec2-3-16-128-154.us-east-2.compute.amazonaws.com:3003/product_info', {
       params: {
         sku: sku || Math.floor(Math.random() * 100) + 1
