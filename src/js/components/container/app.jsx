@@ -38,13 +38,17 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    window.addEventListener('changeItem', (event)=>{this.updateCurrentProduct(event.detail)})
+    this.updateCurrentProduct();
+    // this.setState ({
+    //   currentImage: this.state.currentProduct.photo_url
+    // })
   }
 
-  updateCurrentProduct(sku) {
+  updateCurrentProduct() {
     axios.get('http://ec2-3-16-128-154.us-east-2.compute.amazonaws.com:3003/product_info', {
       params: {
-        sku: sku || Math.floor(Math.random() * 100) + 1      }
+        sku: window.State || Math.floor(Math.random() * 100) + 1
+      }
     })
     .then((response) => {
       this.setState ({
@@ -89,10 +93,10 @@ class App extends React.Component {
 
   
   render() {
-    // window.Info = this
-    // if (!window.State) {
-    //   window.State = this.state.currentProduct.sku
-    // }
+    window.Info = this
+    if (!window.State) {
+      window.State = this.state.currentProduct.sku
+    }
 
     return (
       <Container>
