@@ -24,15 +24,15 @@ class App extends React.Component {
     this.state = {
       currentProduct: {title: ''},
       images: [],
-      currentImage: <img></img>
+      currentImage: ''
     };
   }
 
   componentDidMount() {
     this.updateCurrentProduct();
-    this.setState ({
-      currentImage: this.state.currentProduct.photo_url
-    })
+    // this.setState ({
+    //   currentImage: this.state.currentProduct.photo_url
+    // })
   }
 
   updateCurrentProduct() {
@@ -44,6 +44,9 @@ class App extends React.Component {
     .then((response) => {
       this.setState ({
         currentProduct: response.data[0]
+      })
+      this.setState ({
+        currentImage: response.data[0].photo_url
       })
       const noun = this.state.currentProduct.title.split(' ')[1];
       return noun;
@@ -68,12 +71,14 @@ class App extends React.Component {
     })
   } 
 
+  
+
   // need to prevent default and fix click handler (setState of currentImage?)
   handleClick(e) {
-    console.log('EEEE.target', e.target);
+    console.log('e.target', e.target);
     e.preventDefault();
     this.setState ({
-      currentImage: e.target
+      currentImage: e.target.src
     })
   }
 
@@ -87,12 +92,11 @@ class App extends React.Component {
     return (
       <Container>
       <div id="main">
-        <Title> <h1>{this.state.currentProduct.title}</h1> </Title> 
-
+        <Title> <h1>{this.state.currentProduct.title}</h1> </Title>
         {/* add functionality to change image on click/hover */}
         
         <ImageList image={this.state.currentProduct.photo_url} images={this.state.images} onClick={this.handleClick.bind(this)}/>
-        <img src={this.state.currentProduct.photo_url} style={{height: 300 + 'px', padding: 5 + 'px'}}></img> 
+        <img src={this.state.currentImage} style={{height: 300 + 'px', padding: 5 + 'px'}}></img> 
         <h2>About this item</h2>
         {/* <h4>{this.state.currentProduct.price}</h4> */}
         <h3>Highlights</h3>
