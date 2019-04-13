@@ -24,7 +24,7 @@ import React from "react";
       {/* {props.text} */}
       <ul>
         {/* <li>{this.props.text}</li> */}
-        {this.props.text ? this.props.text.split('.', (Math.floor(Math.random() * 10))).map((line) => {
+        {this.props.text ? this.props.text.split('.', 5).map((line) => {
             return <li>{line}</li>
           }) : null
         }

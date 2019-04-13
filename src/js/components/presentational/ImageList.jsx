@@ -108,8 +108,8 @@ const ImageList = (props) => {
     <div>
       {props.images.map((image) => {
         return (
-          <div onClick={(e) => (props.onClick(e))}>
-            <img src={image.photo_url} style={{height: 50 + 'px', padding: 5 + 'px'}} ></img><br></br>
+          <div>
+            <img src={image.photo_url} style={{height: 50 + 'px', padding: 5 + 'px'}} onClick={(e) => (props.onClick(e))}></img><br></br>
           </div>
         )
       })}
