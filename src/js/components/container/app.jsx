@@ -3,6 +3,7 @@ import ImageList from "../presentational/ImageList.jsx";
 import Description from "../presentational/Description.jsx";
 import axios from "axios";
 import styled from 'styled-components';
+import Lightbox from 'react-lightbox-component';
 
 //////// STYLED COMPONENTS /////////
 
@@ -20,7 +21,7 @@ const Price = styled.h4 `
 const Container = styled.div `
   font-family: Helvetica Neue;
   text-align: left;
-  width: 66%;
+  width: 100%;
   border: 1px solid lightgray;
 `
 
@@ -36,21 +37,21 @@ class App extends React.Component {
     };
   }
 
-  componentDidMount() {
-    window.addEventListener('changeItem', (event)=>{this.updateCurrentProduct(event.detail)})
-  }
-
   // componentDidMount() {
-  //   this.updateCurrentProduct();
-  //   this.setState ({
-  //     currentImage: this.state.currentProduct.photo_url
-  //   })
+  //   window.addEventListener('changeItem', (event)=>{this.updateCurrentProduct(event.detail)})
   // }
 
-  updateCurrentProduct(sku) {
+  componentDidMount() {
+    this.updateCurrentProduct();
+    this.setState ({
+      currentImage: this.state.currentProduct.photo_url
+    })
+  }
+
+  updateCurrentProduct() {
     axios.get('http://ec2-3-16-128-154.us-east-2.compute.amazonaws.com:3003/product_info', {
       params: {
-        sku: sku || Math.floor(Math.random() * 100) + 1
+        sku: window.State || Math.floor(Math.random() * 100) + 1
       }
     })
     .then((response) => {
@@ -89,14 +90,25 @@ class App extends React.Component {
   handleClick(e) {
     // console.log('e.target', e.preventDefault());
     // e.preventDefault();
+
     this.setState ({
       currentImage: e.target.src
     })
   }
 
-  
+  getGalleryItems () {
+    return this.state.images.map((image) => {
+      return {
+        src: image.photo_url,
+        title: image.title
+      }
+    })
+  }
+
+
+
+
   render() {
-    console.log('rerendering!!!')
     window.Info = this
     if (!window.State) {
       window.State = this.state.currentProduct.sku
@@ -114,7 +126,10 @@ class App extends React.Component {
         
         <div>
           <ImageList image={this.state.currentProduct.photo_url} images={this.state.images} onClick={this.handleClick.bind(this)}/>
-          <img src={this.state.currentImage} style={{height: 250 + 'px', maxWidth: '500px', margin: 10 + 'px ' + 130 + 'px', overflow: 'auto'}}></img> 
+          <img src={this.state.currentImage} style={{ height: '300px', maxWidth: '700px', display: 'block', marginLeft: 'auto', marginRight: 'auto' }}></img> 
+          {/* <span style={{float: 'right', height: '20px', padding: '50px'}}>&hearts;</span> */}
+          {/* <PhotoSwipeGallery items={this.getGalleryItems()} thumbnailContent={this.getThumbnailContent}/> */}
+          {/* <Lightbox images={this.getGalleryItems()}/> */}
         </div>
 
         <div>
