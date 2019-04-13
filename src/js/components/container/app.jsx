@@ -3,7 +3,8 @@ import ImageList from "../presentational/ImageList.jsx";
 import Description from "../presentational/Description.jsx";
 import axios from "axios";
 import styled from 'styled-components';
-import Lightbox from 'react-lightbox-component';
+import Lightbox from 'react-images';
+// import Lightbox from 'react-lightbox-component';
 
 //////// STYLED COMPONENTS /////////
 
@@ -23,6 +24,7 @@ const Container = styled.div `
   text-align: left;
   width: 100%;
   border: 1px solid lightgray;
+  padding: 10px 20px;
 `
 
 //////// COMPONENT /////////
@@ -37,21 +39,21 @@ class App extends React.Component {
     };
   }
 
-  componentDidMount() {
-    window.addEventListener('changeItem', (event)=>{this.updateCurrentProduct(event.detail)})
-  }
-
   // componentDidMount() {
-  //   this.updateCurrentProduct();
-  //   this.setState ({
-  //     currentImage: this.state.currentProduct.photo_url
-  //   })
+  //   window.addEventListener('changeItem', (event)=>{this.updateCurrentProduct(event.detail)})
   // }
+
+  componentDidMount() {
+    this.updateCurrentProduct();
+    this.setState ({
+      currentImage: this.state.currentProduct.photo_url
+    })
+  }
 
   updateCurrentProduct(sku) {
     axios.get('http://ec2-3-16-128-154.us-east-2.compute.amazonaws.com:3003/product_info', {
       params: {
-        sku: sku || Math.floor(Math.random() * 100) + 1
+        sku: window.State || Math.floor(Math.random() * 100) + 1
       }
     })
     .then((response) => {
@@ -99,8 +101,7 @@ class App extends React.Component {
   getGalleryItems () {
     return this.state.images.map((image) => {
       return {
-        src: image.photo_url,
-        title: image.title
+        src: image.photo_url
       }
     })
   }
@@ -117,7 +118,6 @@ class App extends React.Component {
     return (
       <Container>
       <div id="main">
-
         <div>
           <Departments> <span> <u>All</u>/ </span> <span> <u>Products</u>/ </span> <span> <u>Stuff</u> </span> </Departments>
           <Title> <h1 style={{fontWeight: 400}}>{this.state.currentProduct.title}</h1> </Title>
@@ -125,11 +125,21 @@ class App extends React.Component {
         </div>
         
         <div>
-          <ImageList image={this.state.currentProduct.photo_url} images={this.state.images} onClick={this.handleClick.bind(this)}/>
+          <ImageList image={this.state.currentProduct.photo_url} images={this.state.images} onClick={this.handleClick.bind(this)} /* style={{float: 'left'}} */ />
+        </div>  
+
+        <div>
           <img src={this.state.currentImage} style={{ height: '300px', maxWidth: '700px', display: 'block', marginLeft: 'auto', marginRight: 'auto' }}></img> 
-          {/* <span style={{float: 'right', height: '20px', padding: '50px'}}>&hearts;</span> */}
+          {/* <span style={{float: 'right', fontSize: '30px', padding: '50px', color: 'red'}}>&hearts;</span> */}
           {/* <PhotoSwipeGallery items={this.getGalleryItems()} thumbnailContent={this.getThumbnailContent}/> */}
           {/* <Lightbox images={this.getGalleryItems()}/> */}
+          <Lightbox
+            images={this.getGalleryItems()}
+            isOpen={this.state.lightboxIsOpen}
+            onClickPrev={this.gotoPrevLightboxImage}
+            onClickNext={this.gotoNextLightboxImage}
+            onClose={this.closeLightbox}
+          />
         </div>
 
         <div>

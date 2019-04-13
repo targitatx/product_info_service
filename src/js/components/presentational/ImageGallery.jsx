@@ -1,46 +1,52 @@
-// import {PhotoSwipeGallery} from 'react-photoswipe';
-
-
-// const ImageGallery = (props) => {
-//   let items = props.images.map((image) => {
-//     return {
-//       src: image.photo_url,
-//       thumbnail: image.photo_url,
-//       w: image.width,
-//       h: image.height,
-//       title: image.title
-//     }
-//   })
-
-//   return (
-//     console.log('items:', items)
-//   )
-// };
-
-// let items = [
-//   {
-//     src: 'http://lorempixel.com/1200/900/sports/1',
-//     thumbnail: 'http://lorempixel.com/120/90/sports/1',
-//     w: 1200,
-//     h: 900,
-//     title: 'Image 1'
-//   },
-//   {
-//     src: 'http://lorempixel.com/1200/900/sports/2',
-//     thumbnail: 'http://lorempixel.com/120/90/sports/2',
-//     w: 1200,
-//     h: 900,
-//     title: 'Image 2'
-//   }
+// import React, { Component } from 'react';
+// import Lightbox from 'react-image-lightbox';
+// import 'react-image-lightbox/style.css'; // This only needs to be imported once in your app
+ 
+// const images = [
+//   '//placekitten.com/1500/500',
+//   '//placekitten.com/4000/3000',
+//   '//placekitten.com/800/1200',
+//   '//placekitten.com/1500/1500',
 // ];
-
  
-// getThumbnailContent = (item) => {
-//   return (
-//     <img src={item.thumbnail} width={120} height={90}/>
-//   );
+// export default class LightboxExample extends Component {
+//   constructor(props) {
+//     super(props);
+ 
+//     this.state = {
+//       photoIndex: 0,
+//       isOpen: false,
+//     };
+//   }
+ 
+//   render() {
+//     const { photoIndex, isOpen } = this.state;
+ 
+//     return (
+//       <div>
+//         <button type="button" onClick={() => this.setState({ isOpen: true })}>
+//           Open Lightbox
+//         </button>
+ 
+//         {isOpen && (
+//           <Lightbox
+//             mainSrc={images[photoIndex]}
+//             nextSrc={images[(photoIndex + 1) % images.length]}
+//             prevSrc={images[(photoIndex + images.length - 1) % images.length]}
+//             onCloseRequest={() => this.setState({ isOpen: false })}
+//             onMovePrevRequest={() =>
+//               this.setState({
+//                 photoIndex: (photoIndex + images.length - 1) % images.length,
+//               })
+//             }
+//             onMoveNextRequest={() =>
+//               this.setState({
+//                 photoIndex: (photoIndex + 1) % images.length,
+//               })
+//             }
+//           />
+//         )}
+//       </div>
+//     );
+//   }
 // }
- 
-// export default <PhotoSwipeGallery items={items} thumbnailContent={getThumbnailContent}/>
-
-// export default ImageGallery;

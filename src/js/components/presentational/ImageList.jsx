@@ -6,6 +6,8 @@ import axios from "axios";
 // add functionality to change image on click/hover
 const ListContainer = styled.div `
   float: left;
+  display: block;
+  position: absolute;
 `
 
 // class ImageList extends React.Component {
@@ -109,7 +111,7 @@ const ImageList = (props) => {
       {props.images.map((image) => {
         return (
           <div>
-            <img src={image.photo_url} style={{height: 50 + 'px', padding: 5 + 'px'}} onClick={(e) => (props.onClick(e))}></img><br></br>
+            <img src={image.photo_url} style={{width: '50px', padding: '5px'}} onClick={(e) => (props.onClick(e))}></img><br></br>
           </div>
         )
       })}
