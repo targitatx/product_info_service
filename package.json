@@ -13,7 +13,10 @@
     "deploy": "pm2 deploy ecosystem.config.js production",
     "start": "nodemon server/server.js",
     "build": "webpack --mode production",
-    "test": "jest"
+    "test": "jest",
+    "makeData": "node --max-old-space-size=4096 Database/fakerData.js",
+    "seedMongo": "mongoimport -d product_info -c products --type csv --file Database/tonzOdata.csv --headerline",
+    "seedMaria": "mysql -u root -p < Database/mariaDB/mariaSchema.sql"
   },
   "dependencies": {
     "axios": "^0.18.0",

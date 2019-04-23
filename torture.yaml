@@ -1,0 +1,15 @@
+config: 
+  target: "http://localhost:3003"
+  http:
+    pool: 20
+  phases: 
+    - duration: 60
+    arrivalRate: 500
+    name: "Sustained load"
+
+scenarios: 
+  - name: "get info"
+    flow:
+      - get: 
+        url: "/product_info/?sku={{$randomNumber(1,10000000)}}"
+        url: "/images"

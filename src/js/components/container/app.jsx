@@ -51,23 +51,25 @@ class App extends React.Component {
   // }
 
   updateCurrentProduct(sku) {
-    axios.get('http://ec2-3-16-128-154.us-east-2.compute.amazonaws.com:3003/product_info', {
+    axios.get('/product_info', {
       params: {
         sku: sku || Math.floor(Math.random() * 100) + 1
       }
     })
     .then((response) => {
+    
       this.setState ({
         currentProduct: response.data[0]
       })
+      console.log(response.data[0].photo_url)
       this.setState ({
         currentImage: response.data[0].photo_url
       })
-      const noun = this.state.currentProduct.title.split(' ')[1];
+      const noun = this.state.currentProduct.title.split(' ')[2];
       return noun;
     })
     .then((queryParam) => {
-      axios.get('http://ec2-3-16-128-154.us-east-2.compute.amazonaws.com:3003/images', {
+      axios.get('/images', {
           params: {
             title: queryParam 
           }
